@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ResumeForm from './ResumeForm';
 import ResumeDetails from './ResumeDetails';
 
@@ -12,4 +12,5 @@ function App() {
     </Router>
   );
 }
+
 export default App;

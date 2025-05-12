@@ -19,7 +19,22 @@ public class GeminiService {
     public String generateFeedback(String resumeText) {
         RestTemplate restTemplate = new RestTemplate();
 
-        Map<String, Object> textPart = Map.of("text", "Give smart resume feedback with improvement suggestions:\n\n" + resumeText);
+        String prompt = """
+            You are a professional resume reviewer. Carefully review ONLY the skills mentioned in the following resume text.
+            Give feedback on:
+            - Strength of technical skills
+            - Mentioned soft skills
+            - What could be improved (e.g., missing modern tools or soft skills)
+            
+            Respond in plain text with clear, professional suggestions.
+
+            Resume:
+            \"\"\"
+            %s
+            \"\"\"
+            """.formatted(resumeText);
+
+        Map<String, Object> textPart = Map.of("text", prompt);
         Map<String, Object> request = Map.of("contents", List.of(Map.of("parts", List.of(textPart))));
 
         HttpHeaders headers = new HttpHeaders();
@@ -33,12 +48,9 @@ public class GeminiService {
             List<Map<String, Object>> candidates = (List<Map<String, Object>>) response.getBody().get("candidates");
             Map<String, Object> content = (Map<String, Object>) candidates.get(0).get("content");
             List<Map<String, Object>> parts = (List<Map<String, Object>>) content.get("parts");
-            String result = parts.get(0).get("text").toString();
-
-            System.out.println("Gemini says: " + result); // optional debug
-            return result;
-
+            return parts.get(0).get("text").toString();
         } catch (Exception e) {
+            e.printStackTrace();
             return "⚠️ Gemini API failed: " + e.getMessage();
         }
     }

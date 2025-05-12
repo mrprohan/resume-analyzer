@@ -15,6 +15,7 @@ import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/resumes")
@@ -43,8 +44,7 @@ public class ResumeController {
             resume.setExtractedText(extractedText);
 
             // Analyze the resume text
-            String feedback = resumeAnalyzerService.analyzeResume(extractedText);
-            resume.setFeedback(feedback);
+            
 
             // Save to Firebase
             String documentId = resumeFirebaseService.saveResume(resume);

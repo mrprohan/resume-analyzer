@@ -1,6 +1,7 @@
 package com.resumeanalyzer.resume_analyzer.model;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public class Resume {
 
@@ -9,7 +10,7 @@ public class Resume {
     private String originalFileName;
     private String uploadedAt;
     private String extractedText;
-    private String feedback;
+    private Map<String, Object> feedback;
 
     // Empty constructor (⚡ Required for Firebase Firestore)
     public Resume() {}
@@ -64,11 +65,11 @@ public class Resume {
         this.extractedText = extractedText;
     }
 
-    public String getFeedback() {
+    public Map<String ,Object> getFeedback() {
         return feedback;
     }
 
-    public void setFeedback(String feedback) {
+    public void setFeedback(Map<String, Object> feedback) {
         this.feedback = feedback;
     }
 }
